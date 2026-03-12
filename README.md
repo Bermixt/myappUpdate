@@ -1,46 +1,67 @@
-# Welcome to your Convex + Next.js + Convex Auth app
+# Multi-User To-Do List (with Sharing)
 
-This is a [Convex](https://convex.dev/) project created with [`npm create convex`](https://www.npmjs.com/package/create-convex).
+A simple but polished multi-user to-do app built with Next.js 16+, Convex, and Convex Auth. Supports List and Kanban views, user sharing, and notes.
 
-After the initial setup (<2 minutes) you'll have a working full-stack app using:
+## 🚀 Project Summary
 
-- Convex as your backend (database, server logic)
-- [React](https://react.dev/) as your frontend (web page interactivity)
-- [Next.js](https://nextjs.org/) for optimized web hosting and page routing
-- [Tailwind](https://tailwindcss.com/) for building great looking accessible UI
-- [Convex Auth](https://labs.convex.dev/auth) for authentication
+Build a polished to-do app with the following features:
+- **Tasks**: Create, edit, and manage tasks with title, description, criticity, and due dates.
+- **Views**: Toggle between a list view and a Kanban board with drag-and-drop support.
+- **Sharing**: Share tasks with other users from the app's directory.
+- **Notes**: Add and manage notes on individual tasks.
+- **Profiles**: Sync user profiles and preferences via Convex Auth.
+- **Permissions**: Secure backend with owner-only editing and shared-user viewing access.
 
-## Get started
+## 🛠️ Tech Stack
 
-If you just cloned this codebase and didn't use `npm create convex`, run:
+- **Frontend**: [Next.js 16+](https://nextjs.org/) (App Router)
+- **Backend/Database**: [Convex](https://convex.dev/)
+- **Auth**: [Convex Auth](https://labs.convex.dev/auth)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Deployment**: [Vercel](https://vercel.com/)
 
-```
-npm install
-npm run dev
-```
+## 🏗️ Architecture
 
-If you're reading this README on GitHub and want to use this template, run:
+- `/app`: Next.js frontend routes (protected and public).
+- `/convex`: Convex backend functions (queries, mutations, actions, and schema).
+- `/memory`: AI-driven project context and milestones tracking.
 
-```
-npm create convex@latest -- -t nextjs-convexauth
-```
+## 🚦 Getting Started
 
-## Learn more
+1.  **Clone the repository**:
+    ```bash
+    git clone <your-repo-url>
+    cd my-app
+    ```
 
-To learn more about developing your project with Convex, check out:
+2.  **Install dependencies**:
+    ```bash
+    npm install
+    ```
 
-- The [Tour of Convex](https://docs.convex.dev/get-started) for a thorough introduction to Convex principles.
-- The rest of [Convex docs](https://docs.convex.dev/) to learn about all Convex features.
-- [Stack](https://stack.convex.dev/) for in-depth articles on advanced topics.
-- [Convex Auth docs](https://labs.convex.dev/auth) for documentation on the Convex Auth library.
+3.  **Set up Convex**:
+    Run the Convex dev server to initialize your environment:
+    ```bash
+    npx convex dev
+    ```
 
-## Configuring other authentication methods
+4.  **Run the app**:
+    ```bash
+    npm run dev
+    ```
 
-To configure different authentication methods, see [Configuration](https://labs.convex.dev/auth/config) in the Convex Auth docs.
+## 📅 Milestones
 
-## Join the community
+1.  **Scaffold**: Next.js App Router + Tailwind + Convex Auth + Protected layout. (✅ Completed)
+2.  **Convex Schema & Task CRUD**: Define schema and implement basic task operations. (⏳ In Progress)
+3.  **Profile Flow & Prefs**: Profile upsert on auth + user preferences.
+4.  **List View & Task Details**: List view with aggregates and details popup.
+5.  **Notes & Timeline**: Notes table and timeline integration.
+6.  **Directory & Sharing**: User directory and sharing functionality.
+7.  **Kanban View**: Kanban board with drag & drop.
+8.  **Filter Bar**: Unified filtering across views.
+9.  **Deployment & Polish**: Vercel deployment and UI polish.
 
-Join thousands of developers building full-stack apps with Convex:
+---
 
-- Join the [Convex Discord community](https://convex.dev/community) to get help in real-time.
-- Follow [Convex on GitHub](https://github.com/get-convex/), star and contribute to the open-source implementation of Convex.
+Built with ❤️ using Next.js and Convex.
