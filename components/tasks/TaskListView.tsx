@@ -33,7 +33,7 @@ export default function TaskListView() {
     );
   }
 
-  const statusLabels = {
+  const statusLabels: { [key: string]: string } = {
     todo: "To Do",
     in_progress: "In Progress",
     done: "Done",

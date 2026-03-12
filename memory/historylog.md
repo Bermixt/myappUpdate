@@ -63,3 +63,7 @@
   - Ensured the landing page (`/`) is public and un-gated, while `/app/*` and `/server/*` remain protected in `proxy.ts`.
   - Updated `handleSignOut` in `components/layout/AppShell.tsx` to redirect the user back to the landing page (`/`) after signing out.
   - Preserved the `proxy.ts` filename as required for the Next.js 15+ environment.
+- Deployment Verification:
+  - Successfully ran `npm run build` to prepare for Vercel deployment.
+  - Fixed TypeScript errors in `components/tasks/TaskListView.tsx` and `hooks/useTaskFilters.ts` related to indexing and enriched task properties.
+  - Verified that all pages and routes compile successfully for production.
