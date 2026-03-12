@@ -2,9 +2,12 @@
 
 import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Badge from "../ui/Badge";
 import { Doc, Id } from "@/convex/_generated/dataModel";
+import { useTaskFilters } from "@/hooks/useTaskFilters";
+import FilterBar from "./FilterBar";
+import TaskDetailsPopup from "./TaskDetailsPopup";
 
 /**
  * TaskListView displays all tasks in a responsive list/table format.
@@ -12,10 +15,17 @@ import { Doc, Id } from "@/convex/_generated/dataModel";
 export default function TaskListView() {
   const tasks = useQuery(api.tasks.listMyTasks);
   const [selectedTaskId, setSelectedTaskId] = useState<Id<"tasks"> | "new" | null>(null);
+  
+  const { filters, setStatuses, setCriticities, setDueDatePreset, clearFilters, filterTasks } = useTaskFilters();
+
+  const filteredTasks = useMemo(() => {
+    return filterTasks(tasks || []);
+  }, [tasks, filterTasks]);
 
   if (tasks === undefined) {
     return (
       <div className="space-y-4">
+        <div className="h-16 bg-slate-100 dark:bg-slate-800 animate-pulse rounded-xl mb-6" />
         {[...Array(5)].map((_, i) => (
           <div key={i} className="h-16 bg-slate-100 dark:bg-slate-800 animate-pulse rounded-xl" />
         ))}
@@ -28,6 +38,8 @@ export default function TaskListView() {
     in_progress: "In Progress",
     done: "Done",
   };
+
+  const isFiltered = filters.statuses.length > 0 || filters.criticities.length > 0 || filters.dueDatePreset !== "all";
 
   return (
     <div className="space-y-6">
@@ -44,12 +56,34 @@ export default function TaskListView() {
         </button>
       </div>
 
+      <FilterBar
+        filters={filters}
+        onSetStatuses={setStatuses}
+        onSetCriticities={setCriticities}
+        onSetDueDatePreset={setDueDatePreset}
+        onClear={clearFilters}
+      />
+
       <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm">
         {tasks.length === 0 ? (
           <div className="p-12 text-center">
             <div className="text-5xl mb-4">📭</div>
             <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100">No tasks found</h3>
             <p className="text-slate-500 dark:text-slate-400">Get started by creating your first task.</p>
+          </div>
+        ) : filteredTasks.length === 0 ? (
+          <div className="p-12 text-center">
+            <div className="text-5xl mb-4">🔍</div>
+            <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-100">No matches found</h3>
+            <p className="text-slate-500 dark:text-slate-400">Try adjusting your filters to find what you're looking for.</p>
+            {isFiltered && (
+              <button
+                onClick={clearFilters}
+                className="mt-4 text-sm font-bold text-slate-800 dark:text-slate-200 underline underline-offset-4"
+              >
+                Reset all filters
+              </button>
+            )}
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -64,7 +98,7 @@ export default function TaskListView() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-                {tasks.map((task) => (
+                {filteredTasks.map((task) => (
                   <tr
                     key={task._id}
                     onClick={() => setSelectedTaskId(task._id)}

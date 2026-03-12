@@ -4,6 +4,8 @@ import { useState, useEffect, useMemo } from "react";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Id, Doc } from "@/convex/_generated/dataModel";
+import { useTaskFilters } from "@/hooks/useTaskFilters";
+import FilterBar from "./FilterBar";
 import {
   DndContext,
   DragOverlay,
@@ -36,6 +38,12 @@ export default function KanbanView() {
   const [selectedTaskId, setSelectedTaskId] = useState<Id<"tasks"> | "new" | null>(null);
   const [activeId, setActiveId] = useState<Id<"tasks"> | null>(null);
   
+  const { filters, setStatuses, setCriticities, setDueDatePreset, clearFilters, filterTasks } = useTaskFilters();
+
+  const filteredTasks = useMemo(() => {
+    return filterTasks(tasksData || []);
+  }, [tasksData, filterTasks]);
+
   // Sensors for better UX
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -56,23 +64,26 @@ export default function KanbanView() {
       done: [],
     };
 
-    if (tasksData) {
-      tasksData.forEach((task) => {
+    if (filteredTasks) {
+      filteredTasks.forEach((task) => {
         if (columns[task.status]) {
           columns[task.status].push(task);
         }
       });
     }
     return columns;
-  }, [tasksData]);
+  }, [filteredTasks]);
 
   // Loading state
   if (tasksData === undefined) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 animate-pulse">
-        {[...Array(3)].map((_, i) => (
-          <div key={i} className="h-[600px] bg-slate-100 dark:bg-slate-800 rounded-3xl" />
-        ))}
+      <div className="space-y-6">
+        <div className="h-16 bg-slate-100 dark:bg-slate-800 animate-pulse rounded-xl mb-6" />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 animate-pulse">
+          {[...Array(3)].map((_, i) => (
+            <div key={i} className="h-[600px] bg-slate-100 dark:bg-slate-800 rounded-3xl" />
+          ))}
+        </div>
       </div>
     );
   }
@@ -143,6 +154,14 @@ export default function KanbanView() {
           <span>➕</span> New Task
         </button>
       </div>
+
+      <FilterBar
+        filters={filters}
+        onSetStatuses={setStatuses}
+        onSetCriticities={setCriticities}
+        onSetDueDatePreset={setDueDatePreset}
+        onClear={clearFilters}
+      />
 
       <DndContext
         sensors={sensors}

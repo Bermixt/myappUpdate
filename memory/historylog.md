@@ -45,3 +45,9 @@
   - Implemented `components/tasks/KanbanCard.tsx`, `components/tasks/KanbanColumn.tsx`, and `components/tasks/KanbanView.tsx`.
   - Added drag-and-drop functionality with owner-only permissions for status updates.
   - Created `app/app/kanban/page.tsx` to host the board.
+- Milestone 8: Filter Bar:
+  - Created `hooks/useTaskFilters.ts` to manage status, criticity, and due date filter state.
+  - Implemented client-side filtering logic with `useMemo` for optimized performance.
+  - Created `components/tasks/FilterBar.tsx` with multi-select toggles and date presets.
+  - Integrated `FilterBar` into both `TaskListView.tsx` and `KanbanView.tsx`.
+  - Added "No matches found" empty states to handle filtered-out views.
