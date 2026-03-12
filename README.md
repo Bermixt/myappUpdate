@@ -53,10 +53,10 @@ Build a polished to-do app with the following features:
 ## 📅 Milestones
 
 1.  **Scaffold**: Next.js App Router + Tailwind + Convex Auth + Protected layout. (✅ Completed)
-2.  **Convex Schema & Task CRUD**: Define schema and implement basic task operations. (⏳ In Progress)
-3.  **Profile Flow & Prefs**: Profile upsert on auth + user preferences.
-4.  **List View & Task Details**: List view with aggregates and details popup.
-5.  **Notes & Timeline**: Notes table and timeline integration.
+2.  **Convex Schema & Task CRUD**: Define schema and implement basic task operations. (✅ Completed)
+3.  **Profile Flow & Prefs**: Profile upsert on auth + user preferences. (✅ Completed)
+4.  **List View & Task Details**: List view with aggregates and details popup. (✅ Completed)
+5.  **Notes & Timeline**: Notes table and timeline integration. (⏳ In Progress)
 6.  **Directory & Sharing**: User directory and sharing functionality.
 7.  **Kanban View**: Kanban board with drag & drop.
 8.  **Filter Bar**: Unified filtering across views.

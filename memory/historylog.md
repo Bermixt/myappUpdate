@@ -19,3 +19,9 @@
   - Implemented `components/ProfileSync.tsx` for automatic profile synchronization upon authentication.
   - Integrated `ProfileSync` into `app/layout.tsx`.
   - Created `app/app/profile/page.tsx` for user profile and preference management.
+  - **Fix**: Resolved "Anonymous User" issue by fetching user email from the database when identity fields are missing (common with Password provider).
+- Milestone 4: List View & Task Details:
+  - Created `components/tasks/TaskListView.tsx` and `components/tasks/TaskDetailsPopup.tsx`.
+  - Implemented responsive task list with status/criticity badges, due date indicators, and aggregate counts.
+  - Integrated task list into `app/app/list/page.tsx`.
+  - Added "New Task" functionality with the details popup.
