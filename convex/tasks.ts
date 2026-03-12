@@ -17,13 +17,15 @@ export const listMyTasks = query({
     const ownedTasks = await ctx.db
       .query("tasks")
       .withIndex("by_ownerUserId", (q) => q.eq("ownerUserId", userId))
-      .collect();
+      .order("desc")
+      .take(100);
 
     // 2. Get shared tasks
     const sharedWithMe = await ctx.db
       .query("taskShares")
       .withIndex("by_sharedUserId", (q) => q.eq("sharedUserId", userId))
-      .collect();
+      .order("desc")
+      .take(100);
 
     const sharedTasks: Doc<"tasks">[] = [];
     for (const share of sharedWithMe) {

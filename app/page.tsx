@@ -4,6 +4,7 @@ import { useConvexAuth } from "convex/react";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -46,20 +47,36 @@ function SignOutButton() {
   const { signOut } = useAuthActions();
   const router = useRouter();
   return (
-    <>
+    <div className="flex items-center gap-4">
       {isAuthenticated && (
-        <button
-          className="bg-slate-600 hover:bg-slate-700 dark:bg-slate-700 dark:hover:bg-slate-600 text-white rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer"
-          onClick={() =>
-            void signOut().then(() => {
-              router.push("/signin");
-            })
-          }
-        >
-          Sign out
-        </button>
+        <>
+          <Link
+            href="/app"
+            className="bg-slate-800 hover:bg-slate-900 dark:bg-slate-100 dark:hover:bg-slate-200 dark:text-slate-900 text-white rounded-lg px-4 py-2 text-sm font-bold transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer"
+          >
+            Go to App
+          </Link>
+          <button
+            className="text-slate-600 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 text-sm font-medium transition-colors cursor-pointer"
+            onClick={() =>
+              void signOut().then(() => {
+                router.push("/signin");
+              })
+            }
+          >
+            Sign out
+          </button>
+        </>
       )}
-    </>
+      {!isAuthenticated && (
+        <Link
+          href="/signin"
+          className="bg-slate-800 hover:bg-slate-900 dark:bg-slate-100 dark:hover:bg-slate-200 dark:text-slate-900 text-white rounded-lg px-4 py-2 text-sm font-bold transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer"
+        >
+          Sign in
+        </Link>
+      )}
+    </div>
   );
 }
 

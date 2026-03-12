@@ -24,10 +24,15 @@ export const upsertMyProfileFromAuth = mutation({
       .withIndex("by_userId", (q) => q.eq("userId", userId))
       .unique();
 
+    // Fetch the user document directly from the users table to get the email
+    // if it's not present in the identity.
+    const user = await ctx.db.get(userId);
+    const email = identity.email || user?.email;
+
     const profileData = {
       userId,
-      email: identity.email,
-      name: identity.name,
+      email: email,
+      name: identity.name || (email ? email.split("@")[0] : "Anonymous User"),
       avatarUrl: identity.pictureUrl,
       updatedAt: Date.now(),
     };
