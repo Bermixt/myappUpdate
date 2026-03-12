@@ -5,6 +5,9 @@ import { api } from "@/convex/_generated/api";
 import { useState, useEffect } from "react";
 import { Id, Doc } from "@/convex/_generated/dataModel";
 import NoteList from "./NoteList";
+import Avatar from "../ui/Avatar";
+import AvatarStack from "../ui/AvatarStack";
+import SharePicker from "./SharePicker";
 
 interface TaskDetailsPopupProps {
   taskId: Id<"tasks"> | null;
@@ -20,6 +23,7 @@ export default function TaskDetailsPopup({ taskId, onClose }: TaskDetailsPopupPr
   const createTask = useMutation(api.tasks.createTask);
   const updateTask = useMutation(api.tasks.updateTask);
   const deleteTask = useMutation(api.tasks.deleteTask);
+  const updateSharing = useMutation(api.tasks.updateSharing);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -29,6 +33,7 @@ export default function TaskDetailsPopup({ taskId, onClose }: TaskDetailsPopupPr
     dueDate: new Date().toISOString().split("T")[0],
   });
 
+  const [sharedUserIds, setSharedUserIds] = useState<Id<"users">[]>([]);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -41,6 +46,7 @@ export default function TaskDetailsPopup({ taskId, onClose }: TaskDetailsPopupPr
         criticity: task.criticity,
         dueDate: new Date(task.dueDate).toISOString().split("T")[0],
       });
+      setSharedUserIds(task.sharedProfiles?.map(p => p.userId) || []);
     }
   }, [task]);
 
@@ -60,8 +66,14 @@ export default function TaskDetailsPopup({ taskId, onClose }: TaskDetailsPopupPr
 
       if (taskId) {
         await updateTask({ taskId, ...payload });
+        if (task?.isOwner) {
+          await updateSharing({ taskId, sharedUserIds });
+        }
       } else {
-        await createTask(payload);
+        const newTaskId = await createTask(payload);
+        if (sharedUserIds.length > 0) {
+          await updateSharing({ taskId: newTaskId, sharedUserIds });
+        }
       }
       onClose();
     } catch (err) {
@@ -182,6 +194,28 @@ export default function TaskDetailsPopup({ taskId, onClose }: TaskDetailsPopupPr
                 className="w-full bg-slate-100 dark:bg-slate-800 border-none rounded-xl p-4 text-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-slate-400 outline-none cursor-pointer"
               />
             </div>
+          </div>
+
+          {/* Sharing Section */}
+          <div className="pt-6 border-t border-slate-100 dark:border-slate-800 space-y-4">
+            <div className="flex justify-between items-center">
+              <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider">Sharing</h3>
+              {task?.sharedProfiles && task.sharedProfiles.length > 0 && (
+                <AvatarStack users={task.sharedProfiles} size="sm" />
+              )}
+            </div>
+            
+            {isOwner ? (
+              <SharePicker
+                selectedUserIds={sharedUserIds}
+                onChange={setSharedUserIds}
+                disabled={saving}
+              />
+            ) : (
+              <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl text-sm text-slate-500 flex items-center gap-3 italic">
+                <span>🔒 Only the owner can manage sharing</span>
+              </div>
+            )}
           </div>
 
           {taskId && (

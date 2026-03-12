@@ -93,3 +93,48 @@ export const updateMyPreferences = mutation({
     });
   },
 });
+
+/**
+ * List all profiles except the current user.
+ */
+export const listAllProfiles = query({
+  args: {},
+  handler: async (ctx) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) return [];
+
+    const profiles = await ctx.db
+      .query("profiles")
+      .order("desc")
+      .take(100);
+
+    return profiles.filter((p) => p.userId !== userId);
+  },
+});
+
+/**
+ * Search profiles by name or email, excluding the current user.
+ */
+export const searchProfiles = query({
+  args: { query: v.string() },
+  handler: async (ctx, args) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) return [];
+
+    const searchTerm = args.query.toLowerCase();
+
+    // Convex doesn't have native text search on these fields yet without an index,
+    // so we'll do a simple filter for now as per PRD "client-side by default" (though this is server-side filtering).
+    // For a real app, we'd use search indexes.
+    const allProfiles = await ctx.db.query("profiles").collect();
+
+    return allProfiles
+      .filter((p) => p.userId !== userId)
+      .filter((p) => {
+        const nameMatch = p.name?.toLowerCase().includes(searchTerm);
+        const emailMatch = p.email?.toLowerCase().includes(searchTerm);
+        return nameMatch || emailMatch;
+      })
+      .slice(0, 10);
+  },
+});

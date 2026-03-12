@@ -9,3 +9,5 @@
 # Bug Root Cause Analysis
 - **Nested Form Submission**: In React, nesting a `<form>` inside another `<form>` is invalid HTML and causes the `submit` event of the inner form to bubble up to the outer form. This can lead to unexpected behavior, such as a modal closing or multiple mutations firing simultaneously.
   - **Resolution**: Avoid nesting forms by using `div` wrappers for layout and only using `<form>` for actual submission units. Use `e.stopPropagation()` in the inner submit handler as a secondary safeguard.
+- **Server-side Search Filtering**: When a native search index is not yet available for a specific field, a simple query followed by `.filter()` (or `.collect()` and JS filter) on the server is a viable intermediate solution for small datasets (like a user directory in an MVP).
+- **Reusable Avatar Pattern**: Centralizing avatar logic with fallback to initials makes the UI much more robust and consistent across the app (directory, stack, topbar).

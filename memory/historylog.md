@@ -30,3 +30,11 @@
   - Implemented `components/tasks/NoteComposer.tsx` for adding notes and `components/tasks/NoteList.tsx` for displaying the timeline.
   - Integrated the notes timeline into `TaskDetailsPopup.tsx`.
   - **Bug Fix**: Resolved a nested form issue in `TaskDetailsPopup.tsx` where clicking "Post Note" would trigger the parent task form's submit handler, causing the modal to close prematurely. Changed the outer wrapper to a `div` and added `e.stopPropagation()` in the note composer.
+- Milestone 6: Directory & Sharing:
+  - Added `listAllProfiles` and `searchProfiles` to `convex/profiles.ts` for user discovery.
+  - Updated `getTask` in `convex/tasks.ts` to enrich the response with `sharedProfiles` (full profile objects for shared users).
+  - Created reusable `Avatar` and `AvatarStack` components in `components/ui/`.
+  - Implemented `app/app/directory/page.tsx` with real-time search for all application users.
+  - Developed `components/tasks/SharePicker.tsx` as a searchable multi-select for sharing tasks with other users.
+  - Integrated sharing management into `TaskDetailsPopup.tsx`, enabling owners to manage access during both creation and editing of tasks.
+  - Enforced owner-only sharing permissions in the UI.

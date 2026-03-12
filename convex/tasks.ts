@@ -105,10 +105,21 @@ export const getTask = query({
       .withIndex("by_taskId", (q) => q.eq("taskId", task._id))
       .collect();
 
+    // Fetch profile info for each shared user
+    const sharedProfiles = [];
+    for (const share of shares) {
+      const profile = await ctx.db
+        .query("profiles")
+        .withIndex("by_userId", (q) => q.eq("userId", share.sharedUserId))
+        .unique();
+      if (profile) sharedProfiles.push(profile);
+    }
+
     return {
       ...task,
       notesCount: notes.length,
       sharedCount: shares.length,
+      sharedProfiles,
       isOwner,
       canEdit: isOwner,
       isOverdue: task.dueDate < Date.now() && task.status !== "done",

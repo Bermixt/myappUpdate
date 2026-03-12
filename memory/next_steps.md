@@ -5,39 +5,34 @@
 | 3. Profile Flow & Prefs | ✅ Completed | Profile upsert on auth + Profile page view preference. |
 | 4. List View & Task Details | ✅ Completed | List view with aggregates + task details popup. |
 | 5. Notes & Timeline | ✅ Completed | Notes table + notes timeline in task popup. |
-| 6. Directory & Sharing | ⭕ Not started | User directory + searchable share picker flow. |
+| 6. Directory & Sharing | ✅ Completed | User directory + searchable share picker flow. |
 | 7. Kanban View | ⭕ Not started | Kanban board with drag & drop (owner-only). |
 | 8. Filter Bar | ⭕ Not started | Unified filtering across List and Kanban views. |
 | 9. Deployment & Polish | ⭕ Not started | Vercel deployment, env validation, and UI polish. |
 
-# Optimized Prompt for Milestone 6
-To implement Milestone 6, use the following prompt:
+# Optimized Prompt for Milestone 7
+To implement Milestone 7, use the following prompt:
 ```text
-Implement the User Directory & Task Sharing feature as defined in Milestone 6 of @memory/todo_app_prd.md.
+Implement the Kanban View for tasks as defined in Milestone 7 of @memory/todo_app_prd.md.
 
 Mind the @.cursor/rules/convex_rules.mdc for all Convex-related components and logic.
 
-1.  **Backend Extensions**:
-    *   In `convex/profiles.ts`:
-        *   `listAllProfiles()`: Query to get all profiles for the directory, excluding the current user.
-        *   `searchProfiles({ query })`: Query to search profiles by name or email.
-    *   In `convex/tasks.ts`:
-        *   Ensure `updateSharing` mutation handles the logic correctly (owner only, validates shared user IDs).
-2.  **Frontend Components**:
-    *   Create `app/app/directory/page.tsx`:
-        *   Display a list of all app users with search functionality.
-    *   Update `components/tasks/TaskDetailsPopup.tsx`:
-        *   Add a "Sharing" section (owner-only visibility for editing).
-        *   Implement a searchable multi-select or popover to pick users from the directory.
-        *   Use `updateSharing` mutation to persist changes.
+1.  **Frontend View**:
+    *   Create `app/app/kanban/page.tsx`:
+        *   Implement a board with three columns: "To Do", "In Progress", and "Done".
+        *   Fetch tasks using `api.tasks.listMyTasks`.
+        *   Implement Drag & Drop functionality to move tasks between columns.
+        *   Each card should show title, criticity, due date, notes count, and shared count (use AvatarStack).
+        *   Clicking a card opens the existing `TaskDetailsPopup`.
+2.  **Permissions & Logic**:
+    *   Ensure status updates via drag and drop are **owner-only**. Show a clear visual indicator if a user cannot move a task.
+    *   When a task is dropped in a new column, call `api.tasks.updateTaskStatus`.
 3.  **UI Polish**:
-    *   Use `Avatar` components for users in the directory and share picker.
-    *   Show current shared users as an "Avatar Stack" in the popup.
+    *   Add empty state messaging for columns with no tasks.
+    *   Ensure column headers use consistent colors as defined in the PRD.
 ```
 
 # Future Goals
-- Milestone 5: Notes & Timeline
-- Milestone 6: Directory & Sharing
 - Milestone 7: Kanban View
 - Milestone 8: Filter Bar
 - Milestone 9: Deployment & Polish
