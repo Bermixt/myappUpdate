@@ -5,3 +5,11 @@
   - Git repository initialized.
   - Project structure verified (app/, components/, convex/).
   - Basic Convex schema with `authTables` and `numbers` table.
+- README.md & Repository setup:
+  - Updated `README.md` with detailed project summary, tech stack, and milestones.
+  - Created a new GitHub repository named `myappUpdate` and pushed the code.
+- Boilerplate Cleanup:
+  - Removed `numbers` table from `convex/schema.ts`.
+  - Cleaned up `convex/myFunctions.ts` by removing demo functions.
+  - Simplified `app/page.tsx` to a clean welcome state.
+  - Deleted unused demo routes `/server` (`app/server/page.tsx`, `app/server/inner.tsx`).
