@@ -1,0 +1,28 @@
+---
+description: Guidance for executing terminal commands in PowerShell environment
+globs: 
+alwaysApply: true
+---
+
+# Terminal Command Execution
+
+This project uses PowerShell as the default shell. Standard Unix command separators like `&&` are not valid in this environment and will cause parser errors.
+
+## Rule: Use `;` instead of `&&`
+
+When executing multiple terminal commands in a single shell call, ALWAYS use the semicolon `;` as the command separator.
+
+### Examples
+
+#### ❌ BAD (Unix-style)
+```bash
+git status && git diff && git log -5
+```
+
+#### ✅ GOOD (PowerShell-compatible)
+```powershell
+git status; git diff; git log -5
+```
+
+## Note on Command Independence
+Using `;` ensures that subsequent commands execute even if earlier ones fail. This is generally preferred in this environment to avoid `ParserError: The token '&&' is not a valid statement separator`.

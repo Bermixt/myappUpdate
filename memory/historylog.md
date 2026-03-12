@@ -14,3 +14,8 @@
   - Created `convex/tasks.ts` with comprehensive CRUD operations and permission checks.
   - Implemented aggregate counters (`notesCount`, `sharedCount`) and ownership checks within Convex queries.
   - Verified the project is clean of `numbers` demo table and functions.
+- Milestone 3: Profile Flow & Prefs:
+  - Created `convex/profiles.ts` with `upsertMyProfileFromAuth`, `getMyProfile`, and `updateMyPreferences`.
+  - Implemented `components/ProfileSync.tsx` for automatic profile synchronization upon authentication.
+  - Integrated `ProfileSync` into `app/layout.tsx`.
+  - Created `app/app/profile/page.tsx` for user profile and preference management.
