@@ -8,8 +8,9 @@
 - README.md & Repository setup:
   - Updated `README.md` with detailed project summary, tech stack, and milestones.
   - Created a new GitHub repository named `myappUpdate` and pushed the code.
-- Boilerplate Cleanup:
-  - Removed `numbers` table from `convex/schema.ts`.
-  - Cleaned up `convex/myFunctions.ts` by removing demo functions.
-  - Simplified `app/page.tsx` to a clean welcome state.
-  - Deleted unused demo routes `/server` (`app/server/page.tsx`, `app/server/inner.tsx`).
+- Milestone 2: Convex Schema & Task CRUD:
+  - Updated `convex/schema.ts` with `profiles`, `tasks`, `taskShares`, and `notes` tables.
+  - Implemented composite indexes (`by_taskId_and_sharedUserId`) for optimized performance.
+  - Created `convex/tasks.ts` with comprehensive CRUD operations and permission checks.
+  - Implemented aggregate counters (`notesCount`, `sharedCount`) and ownership checks within Convex queries.
+  - Verified the project is clean of `numbers` demo table and functions.
