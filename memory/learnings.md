@@ -9,9 +9,14 @@
   - **Pointer Activation Constraint**: When combining drag-and-drop with click events (like opening a task popup), adding a `distance` constraint (e.g., 5px) to the `PointerSensor` prevents accidental drags from blocking clicks.
 - **Client-side Filtering with useMemo**: For MVPs with moderate data sizes, client-side filtering using a custom hook and `useMemo` provides a highly responsive UI without the complexity of server-side query management.
 - **Reusable Filter State**: Abstracting filter logic into a `useTaskFilters` hook ensures consistency across different views (List and Kanban) and simplifies component code.
+- **TypeScript Production Build Reliability**: Certain dynamic property assignments (like `statusLabels[task.status]`) can pass dev-mode compilation but fail during a strict `next build`. Using explicit index signatures (e.g., `Record<string, string>`) or proper object typing is essential for a stable production build.
+- **Vercel Environment Variable Configuration**: Missing `NEXT_PUBLIC_CONVEX_URL` and `CONVEX_DEPLOYMENT` on Vercel leads to immediate runtime crashes during client-side hydration. Pre-configuring these variables in the Vercel dashboard is a critical first step for any deployment.
+- **Preferred View Redirection**: Implementing a server-side redirect at the app root (`app/page.tsx`) that checks user preferences allows for a personalized landing experience, seamlessly moving users between `list` and `kanban` views upon entry.
+- **Global CSS Animations with Tailwind v4**: Centralizing simple entrance animations (`fade-in`, `slide-up`) in `globals.css` and applying them to high-visibility components (cards, table rows) provides a cohesive and professional "polished" feel with minimal code duplication.
 
 # Bug Root Cause Analysis
 - **Nested Form Submission**: In React, nesting a `<form>` inside another `<form>` is invalid HTML and causes the `submit` event of the inner form to bubble up to the outer form. This can lead to unexpected behavior, such as a modal closing or multiple mutations firing simultaneously.
   - **Resolution**: Avoid nesting forms by using `div` wrappers for layout and only using `<form>` for actual submission units. Use `e.stopPropagation()` in the inner submit handler as a secondary safeguard.
 - **Server-side Search Filtering**: When a native search index is not yet available for a specific field, a simple query followed by `.filter()` (or `.collect()` and JS filter) on the server is a viable intermediate solution for small datasets (like a user directory in an MVP).
 - **Reusable Avatar Pattern**: Centralizing avatar logic with fallback to initials makes the UI much more robust and consistent across the app (directory, stack, topbar).
+- **Indexing Type Error**: Encountered a `TypeError` when accessing `statusLabels[task.status]` because the object didn't explicitly allow string indexing. Fixed by adding a `Record<string, string>` type annotation to the lookup object.
