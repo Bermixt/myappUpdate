@@ -102,17 +102,22 @@ export default function FilterBar({
       {/* Due Date Filter */}
       <div className="flex flex-col gap-1.5">
         <span className="text-[10px] font-bold uppercase text-slate-400 dark:text-slate-500 tracking-wider ml-1">Due Date</span>
-        <select
-          value={filters.dueDatePreset}
-          onChange={(e) => onSetDueDatePreset(e.target.value as DueDatePreset)}
-          className="bg-slate-50 dark:bg-slate-800/50 border-none rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-slate-200 dark:focus:ring-slate-700 outline-none cursor-pointer"
-        >
-          {DUE_DATE_PRESETS.map((p) => (
-            <option key={p.id} value={p.id}>
-              {p.label}
-            </option>
-          ))}
-        </select>
+        <div className="relative group">
+          <select
+            value={filters.dueDatePreset}
+            onChange={(e) => onSetDueDatePreset(e.target.value as DueDatePreset)}
+            className="appearance-none bg-slate-50 dark:bg-slate-800/50 border-none rounded-xl pl-3 pr-8 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 focus:ring-2 focus:ring-slate-200 dark:focus:ring-slate-700 outline-none cursor-pointer transition-all hover:bg-slate-100 dark:hover:bg-slate-800"
+          >
+            {DUE_DATE_PRESETS.map((p) => (
+              <option key={p.id} value={p.id} className="dark:bg-slate-900">
+                {p.label}
+              </option>
+            ))}
+          </select>
+          <div className="absolute inset-y-0 right-2.5 flex items-center pointer-events-none text-[10px] text-slate-400">
+            ▼
+          </div>
+        </div>
       </div>
 
       {/* Clear Filters */}

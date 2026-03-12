@@ -161,7 +161,7 @@ export default function TaskDetailsPopup({ taskId, onClose }: TaskDetailsPopupPr
                 disabled={!canEdit || saving}
                 value={formData.status}
                 onChange={(e) => setFormData({ ...formData, status: e.target.value as any })}
-                className="w-full bg-slate-100 dark:bg-slate-800 border-none rounded-xl p-4 text-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-slate-400 outline-none appearance-none cursor-pointer"
+                className="w-full bg-slate-100 dark:bg-slate-800 border-none rounded-xl p-4 text-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-slate-400 outline-none appearance-none cursor-pointer transition-all hover:bg-slate-200 dark:hover:bg-slate-700"
               >
                 <option value="todo">To Do</option>
                 <option value="in_progress">In Progress</option>
@@ -175,7 +175,7 @@ export default function TaskDetailsPopup({ taskId, onClose }: TaskDetailsPopupPr
                 disabled={!canEdit || saving}
                 value={formData.criticity}
                 onChange={(e) => setFormData({ ...formData, criticity: e.target.value as any })}
-                className="w-full bg-slate-100 dark:bg-slate-800 border-none rounded-xl p-4 text-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-slate-400 outline-none appearance-none cursor-pointer"
+                className="w-full bg-slate-100 dark:bg-slate-800 border-none rounded-xl p-4 text-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-slate-400 outline-none appearance-none cursor-pointer transition-all hover:bg-slate-200 dark:hover:bg-slate-700"
               >
                 <option value="low">Low</option>
                 <option value="medium">Medium</option>

@@ -1,172 +1,208 @@
 "use client";
 
 import { useConvexAuth } from "convex/react";
-import { useAuthActions } from "@convex-dev/auth/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect } from "react";
 
+/**
+ * Landing page for TaskFlow.
+ * Polished for Milestone 9 with feature highlights and clear CTAs.
+ */
 export default function Home() {
-  return (
-    <>
-      <header className="sticky top-0 z-10 bg-background/80 backdrop-blur-md p-4 border-b border-slate-200 dark:border-slate-700 flex flex-row justify-between items-center shadow-sm">
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-3">
-            <Image src="/convex.svg" alt="Convex Logo" width={32} height={32} />
-            <div className="w-px h-8 bg-slate-300 dark:bg-slate-600"></div>
-            <Image
-              src="/nextjs-icon-light-background.svg"
-              alt="Next.js Logo"
-              width={32}
-              height={32}
-              className="dark:hidden"
-            />
-            <Image
-              src="/nextjs-icon-dark-background.svg"
-              alt="Next.js Logo"
-              width={32}
-              height={32}
-              className="hidden dark:block"
-            />
-          </div>
-          <h1 className="font-semibold text-slate-800 dark:text-slate-200">
-            Convex + Next.js + Convex Auth
-          </h1>
-        </div>
-        <SignOutButton />
-      </header>
-      <main className="p-8 flex flex-col gap-8">
-        <Content />
-      </main>
-    </>
-  );
-}
-
-function SignOutButton() {
-  const { isAuthenticated } = useConvexAuth();
-  const { signOut } = useAuthActions();
+  const { isAuthenticated, isLoading } = useConvexAuth();
   const router = useRouter();
-  return (
-    <div className="flex items-center gap-4">
-      {isAuthenticated && (
-        <>
-          <Link
-            href="/app"
-            className="bg-slate-800 hover:bg-slate-900 dark:bg-slate-100 dark:hover:bg-slate-200 dark:text-slate-900 text-white rounded-lg px-4 py-2 text-sm font-bold transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer"
-          >
-            Go to App
-          </Link>
-          <button
-            className="text-slate-600 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 text-sm font-medium transition-colors cursor-pointer"
-            onClick={() =>
-              void signOut().then(() => {
-                router.push("/signin");
-              })
-            }
-          >
-            Sign out
-          </button>
-        </>
-      )}
-      {!isAuthenticated && (
-        <Link
-          href="/signin"
-          className="bg-slate-800 hover:bg-slate-900 dark:bg-slate-100 dark:hover:bg-slate-200 dark:text-slate-900 text-white rounded-lg px-4 py-2 text-sm font-bold transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer"
-        >
-          Sign in
-        </Link>
-      )}
-    </div>
-  );
-}
 
-function Content() {
-  return (
-    <div className="flex flex-col gap-4 max-w-lg mx-auto">
-      <div>
-        <h2 className="font-bold text-xl text-slate-800 dark:text-slate-200 text-center">
-          Welcome to your Multi-User To-Do App!
-        </h2>
-        <p className="text-slate-600 dark:text-slate-400 mt-2 text-center">
-          You are signed in and ready to start building your task list.
-        </p>
-      </div>
+  // Redirect authenticated users to the app
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/app");
+    }
+  }, [isAuthenticated, router]);
 
-      <div className="h-px bg-slate-200 dark:bg-slate-700"></div>
-
-      <div className="flex flex-col gap-4">
-        <h2 className="font-semibold text-xl text-slate-800 dark:text-slate-200">
-          Next Steps
-        </h2>
-        <p className="text-slate-600 dark:text-slate-400 text-sm">
-          Follow the milestones in the <code className="px-1 bg-slate-100 dark:bg-slate-800 rounded">README.md</code> to implement the core features:
-        </p>
-        <ul className="list-disc list-inside text-sm text-slate-600 dark:text-slate-400 flex flex-col gap-2">
-          <li>Define the Task schema</li>
-          <li>Implement Task CRUD operations</li>
-          <li>Create the List and Kanban views</li>
-          <li>Add task sharing and notes</li>
-        </ul>
-      </div>
-
-      <div className="h-px bg-slate-200 dark:bg-slate-700"></div>
-
-      <div className="flex flex-col gap-4">
-        <h2 className="text-xl font-bold text-slate-800 dark:text-slate-200">
-          Useful resources
-        </h2>
-        <div className="flex gap-4">
-          <div className="flex flex-col gap-4 w-1/2">
-            <ResourceCard
-              title="Convex docs"
-              description="Read comprehensive documentation for all Convex features."
-              href="https://docs.convex.dev/home"
-            />
-            <ResourceCard
-              title="Stack articles"
-              description="Learn about best practices, use cases, and more from a growing collection of articles, videos, and walkthroughs."
-              href="https://stack.convex.dev"
-            />
-          </div>
-          <div className="flex flex-col gap-4 w-1/2">
-            <ResourceCard
-              title="Templates"
-              description="Browse our collection of templates to get started quickly."
-              href="https://www.convex.dev/templates"
-            />
-            <ResourceCard
-              title="Discord"
-              description="Join our developer community to ask questions, trade tips & tricks, and show off your projects."
-              href="https://www.convex.dev/community"
-            />
-          </div>
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-pulse flex flex-col items-center gap-4">
+          <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-2xl" />
+          <div className="h-4 w-32 bg-slate-100 dark:bg-slate-800 rounded" />
         </div>
       </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-white dark:bg-slate-950 selection:bg-slate-200 dark:selection:bg-slate-800">
+      {/* Navbar */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-100 dark:border-slate-900">
+        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-slate-900 dark:bg-slate-100 rounded-lg flex items-center justify-center text-white dark:text-slate-900 font-bold text-lg">
+              T
+            </div>
+            <span className="font-extrabold text-xl tracking-tight text-slate-900 dark:text-slate-100">
+              TaskFlow
+            </span>
+          </div>
+          
+          <nav className="hidden md:flex items-center gap-8">
+            <a href="#features" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Features</a>
+            <a href="https://docs.convex.dev" target="_blank" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Docs</a>
+          </nav>
+
+          <div className="flex items-center gap-4">
+            <Link 
+              href="/signin" 
+              className="text-sm font-bold text-slate-900 dark:text-slate-100 hover:opacity-70 transition-opacity"
+            >
+              Sign In
+            </Link>
+            <Link 
+              href="/signin" 
+              className="bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 px-5 py-2 rounded-full text-sm font-bold hover:shadow-lg hover:scale-105 active:scale-95 transition-all shadow-md"
+            >
+              Get Started
+            </Link>
+          </div>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <main className="pt-32 pb-20 px-6">
+        <section className="max-w-7xl mx-auto text-center space-y-8 animate-fade-in">
+          <div className="inline-block px-4 py-1.5 rounded-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 text-xs font-bold uppercase tracking-widest">
+            Simple. Social. Productive.
+          </div>
+          <h1 className="text-5xl md:text-7xl font-black text-slate-900 dark:text-slate-100 tracking-tighter leading-[1.1]">
+            Organize your life <br className="hidden md:block" />
+            <span className="text-slate-400 dark:text-slate-600">with zero friction.</span>
+          </h1>
+          <p className="max-w-2xl mx-auto text-lg md:text-xl text-slate-500 dark:text-slate-400 font-medium">
+            The multi-user task manager built for speed. Toggle between List and Kanban, share tasks with friends, and stay focused on what matters.
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+            <Link 
+              href="/signin" 
+              className="w-full sm:w-auto bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 px-8 py-4 rounded-2xl text-lg font-bold hover:shadow-xl hover:scale-105 active:scale-95 transition-all shadow-lg"
+            >
+              Start for Free
+            </Link>
+            <a 
+              href="https://github.com/convex-dev/convex-auth" 
+              target="_blank"
+              className="w-full sm:w-auto bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 px-8 py-4 rounded-2xl text-lg font-bold hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors flex items-center justify-center gap-2"
+            >
+              Learn about Convex Auth
+            </a>
+          </div>
+
+          {/* Mock Preview */}
+          <div className="relative mt-20 max-w-5xl mx-auto p-4 bg-slate-100/50 dark:bg-slate-900/50 rounded-[2rem] border border-slate-200/50 dark:border-slate-800/50 backdrop-blur-sm animate-slide-up">
+            <div className="overflow-hidden rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col aspect-video md:aspect-[21/9]">
+              <div className="h-10 border-b border-slate-100 dark:border-slate-800 flex items-center px-4 gap-2 bg-slate-50/50 dark:bg-slate-900/50">
+                <div className="flex gap-1.5">
+                  <div className="w-3 h-3 rounded-full bg-slate-200 dark:bg-slate-800" />
+                  <div className="w-3 h-3 rounded-full bg-slate-200 dark:bg-slate-800" />
+                  <div className="w-3 h-3 rounded-full bg-slate-200 dark:bg-slate-800" />
+                </div>
+                <div className="mx-auto w-1/3 h-4 bg-slate-100 dark:bg-slate-800 rounded-full" />
+              </div>
+              <div className="flex-1 p-8 grid grid-cols-3 gap-6">
+                <div className="space-y-4">
+                  <div className="h-4 bg-slate-100 dark:bg-slate-800 rounded w-1/2" />
+                  <div className="space-y-2">
+                    <div className="h-12 bg-slate-50 dark:bg-slate-800/50 rounded-xl" />
+                    <div className="h-12 bg-slate-50 dark:bg-slate-800/50 rounded-xl" />
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  <div className="h-4 bg-slate-100 dark:bg-slate-800 rounded w-1/2" />
+                  <div className="space-y-2">
+                    <div className="h-12 bg-slate-50 dark:bg-slate-800/50 rounded-xl ring-2 ring-slate-200 dark:ring-slate-700 shadow-sm" />
+                    <div className="h-12 bg-slate-50 dark:bg-slate-800/50 rounded-xl" />
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  <div className="h-4 bg-slate-100 dark:bg-slate-800 rounded w-1/2" />
+                  <div className="space-y-2">
+                    <div className="h-12 bg-slate-50 dark:bg-slate-800/50 rounded-xl" />
+                    <div className="h-12 bg-slate-50 dark:bg-slate-800/50 rounded-xl" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Features Grid */}
+        <section id="features" className="max-w-7xl mx-auto py-32 grid md:grid-cols-3 gap-12">
+          <FeatureCard 
+            icon="📋" 
+            title="List & Kanban" 
+            description="Switch between views seamlessly. Manage tasks your way, whether you prefer structured lists or visual boards." 
+          />
+          <FeatureCard 
+            icon="👥" 
+            title="Smart Sharing" 
+            description="Collaborate instantly. Share individual tasks with any user in the directory with proper access controls." 
+          />
+          <FeatureCard 
+            icon="🔒" 
+            title="Secure by Convex" 
+            description="Built on Convex's real-time engine with top-tier security and role-based permissions baked in." 
+          />
+        </section>
+
+        {/* CTA Footer */}
+        <section className="max-w-4xl mx-auto bg-slate-900 dark:bg-slate-100 rounded-[3rem] p-12 md:p-20 text-center space-y-8 shadow-2xl">
+          <h2 className="text-3xl md:text-5xl font-black text-white dark:text-slate-900 tracking-tight">
+            Ready to get organized?
+          </h2>
+          <p className="text-slate-400 dark:text-slate-600 font-medium text-lg">
+            Join thousands of users who manage their tasks with TaskFlow. <br className="hidden sm:block" />
+            Simple setup, zero maintenance.
+          </p>
+          <div className="pt-4">
+            <Link 
+              href="/signin" 
+              className="bg-white dark:bg-slate-900 text-slate-900 dark:text-white px-10 py-4 rounded-2xl text-xl font-black hover:scale-105 active:scale-95 transition-all shadow-xl"
+            >
+              Sign Up Now
+            </Link>
+          </div>
+        </section>
+      </main>
+
+      <footer className="max-w-7xl mx-auto px-6 py-12 border-t border-slate-100 dark:border-slate-900 flex flex-col md:row justify-between items-center gap-6">
+        <div className="flex items-center gap-2">
+          <div className="w-6 h-6 bg-slate-900 dark:bg-slate-100 rounded flex items-center justify-center text-white dark:text-slate-900 font-bold text-xs">
+            T
+          </div>
+          <span className="font-bold text-slate-900 dark:text-slate-100">
+            TaskFlow
+          </span>
+        </div>
+        <p className="text-sm text-slate-500 dark:text-slate-500">
+          Built with Convex, Next.js, and Tailwind CSS.
+        </p>
+        <div className="flex gap-6 text-sm font-medium text-slate-400 dark:text-slate-500">
+          <Link href="https://convex.dev" target="_blank" className="hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Convex</Link>
+          <Link href="https://nextjs.org" target="_blank" className="hover:text-slate-900 dark:hover:text-slate-100 transition-colors">Next.js</Link>
+        </div>
+      </footer>
     </div>
   );
 }
 
-function ResourceCard({
-  title,
-  description,
-  href,
-}: {
-  title: string;
-  description: string;
-  href: string;
-}) {
+function FeatureCard({ icon, title, description }: { icon: string; title: string; description: string }) {
   return (
-    <a
-      href={href}
-      className="flex flex-col gap-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 p-5 rounded-xl h-40 overflow-auto border border-slate-300 dark:border-slate-600 hover:border-slate-400 dark:hover:border-slate-500 shadow-sm hover:shadow-md transition-all duration-200 hover:scale-[1.02] group cursor-pointer"
-      target="_blank"
-    >
-      <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:group-hover:text-slate-100 transition-colors">
-        {title} →
-      </h3>
-      <p className="text-xs text-slate-600 dark:text-slate-400">
+    <div className="space-y-4 group">
+      <div className="text-4xl">{icon}</div>
+      <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100 group-hover:text-slate-500 transition-colors">{title}</h3>
+      <p className="text-slate-600 dark:text-slate-400 leading-relaxed font-medium">
         {description}
       </p>
-    </a>
+    </div>
   );
 }

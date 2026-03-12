@@ -102,7 +102,7 @@ export default function TaskListView() {
                   <tr
                     key={task._id}
                     onClick={() => setSelectedTaskId(task._id)}
-                    className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer group"
+                    className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer group animate-fade-in"
                   >
                     <td className="px-6 py-4">
                       <div className="flex flex-col">

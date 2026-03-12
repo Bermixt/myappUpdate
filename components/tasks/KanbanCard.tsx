@@ -46,7 +46,7 @@ export default function KanbanCard({ task, onClick }: KanbanCardProps) {
         }
         onClick();
       }}
-      className={`bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow group relative ${
+      className={`bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-all group relative animate-slide-up ${
         isDragging ? "z-50 shadow-xl ring-2 ring-slate-400/50" : ""
       }`}
     >

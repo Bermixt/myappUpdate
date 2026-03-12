@@ -2,16 +2,26 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useQuery } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 /**
- * The app root redirects to the list view by default.
+ * The app root redirects to the user's preferred view.
+ * If no preference is set, defaults to the list view.
  */
 export default function AppRoot() {
   const router = useRouter();
+  const profile = useQuery(api.profiles.getMyProfile);
 
   useEffect(() => {
-    router.replace("/app/list");
-  }, [router]);
+    if (profile === undefined) return; // Loading
+
+    if (profile && profile.defaultView === "kanban") {
+      router.replace("/app/kanban");
+    } else {
+      router.replace("/app/list");
+    }
+  }, [profile, router]);
 
   return (
     <div className="flex items-center justify-center min-h-[50vh]">

@@ -1,67 +1,68 @@
-# Multi-User To-Do List (with Sharing)
+# TaskFlow — Simple Multi-User To-Do List
 
-A simple but polished multi-user to-do app built with Next.js 16+, Convex, and Convex Auth. Supports List and Kanban views, user sharing, and notes.
+A polished multi-user to-do app built with **Next.js 16+**, **Convex**, and **Convex Auth**. Supports List and Kanban views, user sharing, and notes.
 
-## 🚀 Project Summary
+## 🚀 Key Features
 
-Build a polished to-do app with the following features:
-- **Tasks**: Create, edit, and manage tasks with title, description, criticity, and due dates.
-- **Views**: Toggle between a list view and a Kanban board with drag-and-drop support.
-- **Sharing**: Share tasks with other users from the app's directory.
-- **Notes**: Add and manage notes on individual tasks.
-- **Profiles**: Sync user profiles and preferences via Convex Auth.
-- **Permissions**: Secure backend with owner-only editing and shared-user viewing access.
+- **Dual Views**: Seamlessly switch between a structured List view and a visual Kanban board with drag-and-drop.
+- **Unified Filtering**: Filter tasks by status, criticity, and due date across both views.
+- **Smart Sharing**: Share tasks with other users from the directory with real-time updates.
+- **Notes & Timeline**: Add notes to tasks and track changes in a beautiful timeline.
+- **User Directory**: Search and find other users in the community.
+- **Profiles & Prefs**: Personalized profiles with synced auth and app preferences.
+- **Permissions**: Secure-by-default backend with owner-only editing and shared-user viewing.
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: [Next.js 16+](https://nextjs.org/) (App Router)
-- **Backend/Database**: [Convex](https://convex.dev/)
-- **Auth**: [Convex Auth](https://labs.convex.dev/auth)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Frontend**: [Next.js 16+](https://nextjs.org/) (App Router, Tailwind CSS v4)
+- **Backend/Database**: [Convex](https://convex.dev/) (Real-time DB + Serverless Functions)
+- **Auth**: [Convex Auth](https://labs.convex.dev/auth) (Password-based + Identity Sync)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
 - **Deployment**: [Vercel](https://vercel.com/)
-
-## 🏗️ Architecture
-
-- `/app`: Next.js frontend routes (protected and public).
-- `/convex`: Convex backend functions (queries, mutations, actions, and schema).
-- `/memory`: AI-driven project context and milestones tracking.
 
 ## 🚦 Getting Started
 
-1.  **Clone the repository**:
-    ```bash
-    git clone <your-repo-url>
-    cd my-app
-    ```
+### 1. Clone & Install
+```bash
+git clone <your-repo-url>
+cd taskflow
+npm install
+```
 
-2.  **Install dependencies**:
-    ```bash
-    npm install
-    ```
+### 2. Set up Convex
+Initialize your Convex project and environment:
+```bash
+npx convex dev
+```
+This will create your `.env.local` file with the required `NEXT_PUBLIC_CONVEX_URL` and `CONVEX_DEPLOYMENT`.
 
-3.  **Set up Convex**:
-    Run the Convex dev server to initialize your environment:
-    ```bash
-    npx convex dev
-    ```
+### 3. Run the App
+```bash
+npm run dev
+```
 
-4.  **Run the app**:
-    ```bash
-    npm run dev
-    ```
+## 🚢 Deployment (Vercel)
 
-## 📅 Milestones
+1. **Push to GitHub**: Push your repository to a GitHub account.
+2. **Import to Vercel**: Connect your repository to Vercel.
+3. **Configure Environment Variables**:
+   Add the following variables to your Vercel project:
+   - `NEXT_PUBLIC_CONVEX_URL` (from your `.env.local`)
+   - `CONVEX_DEPLOYMENT` (from your `.env.local`)
+4. **Deploy**: Vercel will automatically build and deploy your app.
 
-1.  **Scaffold**: Next.js App Router + Tailwind + Convex Auth + Protected layout. (✅ Completed)
-2.  **Convex Schema & Task CRUD**: Define schema and implement basic task operations. (✅ Completed)
-3.  **Profile Flow & Prefs**: Profile upsert on auth + user preferences. (✅ Completed)
-4.  **List View & Task Details**: List view with aggregates and details popup. (✅ Completed)
-5.  **Notes & Timeline**: Notes table and timeline integration. (⏳ In Progress)
-6.  **Directory & Sharing**: User directory and sharing functionality.
-7.  **Kanban View**: Kanban board with drag & drop.
-8.  **Filter Bar**: Unified filtering across views.
-9.  **Deployment & Polish**: Vercel deployment and UI polish.
+## 📅 Completed Milestones
+
+1. ✅ **Scaffold**: Next.js App Router + Tailwind + Convex Auth + Protected layout.
+2. ✅ **Convex Schema & Task CRUD**: Defined schema and implemented core task operations.
+3. ✅ **Profile Flow & Prefs**: Profile upsert on auth + user preferences.
+4. ✅ **List View & Task Details**: List view with aggregates and details popup.
+5. ✅ **Notes & Timeline**: Notes table and timeline integration.
+6. ✅ **Directory & Sharing**: User directory and sharing functionality.
+7. ✅ **Kanban View**: Kanban board with drag & drop.
+8. ✅ **Filter Bar**: Unified filtering across views.
+9. ✅ **Deployment & Polish**: Final UI/UX polish and deployment preparation.
 
 ---
 
-Built with ❤️ using Next.js and Convex.
+Built with ❤️ by the TaskFlow team.

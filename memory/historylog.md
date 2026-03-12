@@ -51,3 +51,15 @@
   - Created `components/tasks/FilterBar.tsx` with multi-select toggles and date presets.
   - Integrated `FilterBar` into both `TaskListView.tsx` and `KanbanView.tsx`.
   - Added "No matches found" empty states to handle filtered-out views.
+- Milestone 9: Deployment & Polish:
+  - Redesigned the landing page (`app/page.tsx`) to be a polished "TaskFlow" product page with features and CTAs.
+  - Refined the sign-in/up page (`app/signin/page.tsx`) for consistent branding and improved UX.
+  - Added global `fade-in` and `slide-up` animations to `app/globals.css`.
+  - Applied entrance animations to `KanbanCard.tsx`, `TaskListView.tsx` rows, and `ProfilePage`.
+  - Created `.env.example` and updated `README.md` with comprehensive deployment instructions for Vercel.
+  - Updated project memory and milestone tracking to reflect 100% completion.
+- Authentication Flow Polish:
+  - Updated `app/app/page.tsx` to automatically redirect users to their preferred view (`list` or `kanban`) based on their profile settings.
+  - Ensured the landing page (`/`) is public and un-gated, while `/app/*` and `/server/*` remain protected in `proxy.ts`.
+  - Updated `handleSignOut` in `components/layout/AppShell.tsx` to redirect the user back to the landing page (`/`) after signing out.
+  - Preserved the `proxy.ts` filename as required for the Next.js 15+ environment.
