@@ -4,6 +4,7 @@ import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { useState, useEffect } from "react";
 import { Id, Doc } from "@/convex/_generated/dataModel";
+import NoteList from "./NoteList";
 
 interface TaskDetailsPopupProps {
   taskId: Id<"tasks"> | null;
@@ -43,8 +44,8 @@ export default function TaskDetailsPopup({ taskId, onClose }: TaskDetailsPopupPr
     }
   }, [task]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (e?: React.FormEvent | React.MouseEvent) => {
+    if (e) e.preventDefault();
     setSaving(true);
     setError(null);
 
@@ -110,7 +111,7 @@ export default function TaskDetailsPopup({ taskId, onClose }: TaskDetailsPopupPr
         </div>
 
         {/* Content */}
-        <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-8 space-y-6">
+        <div className="flex-1 overflow-y-auto p-8 space-y-6">
           {error && (
             <div className="bg-rose-50 border border-rose-200 text-rose-600 px-4 py-3 rounded-xl text-sm font-medium">
               {error}
@@ -199,7 +200,13 @@ export default function TaskDetailsPopup({ taskId, onClose }: TaskDetailsPopupPr
               </div>
             </div>
           )}
-        </form>
+
+          {taskId && (
+            <div className="pt-6 border-t border-slate-100 dark:border-slate-800">
+              <NoteList taskId={taskId} />
+            </div>
+          )}
+        </div>
 
         {/* Footer */}
         <div className="px-8 py-6 border-t border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 flex flex-row-reverse gap-4">

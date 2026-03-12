@@ -35,7 +35,8 @@ When the user invokes the `/memory` command, you must read the parameter provide
 3. **Execute Updates:**
    *   **Update `memory/historylog.md`**: Append a new bulleted entry under today's date (create the date header if it doesn't exist). Summarize the exact technical work accomplished, files changed, and bugs fixed in this session.
    *   **Update `memory/learnings.md`**: If any new technical patterns emerged, framework quirks were encountered, or complex bugs were analyzed in this session, append the insights here so we avoid making the same mistake twice.
-   *   **Update `memory/next_steps.md`**: Update the status of any completed milestones in the tracking table. If new tasks, missing features, or blockers were discussed in the conversation, append them to the immediate next steps.
+   *   **Update `memory/next_steps.md`**: Update the status of any completed milestones in the tracking table.
+   *   **Update Next Milestone Prompt**: In `memory/next_steps.md`, update the `Optimized Prompt for Milestone [X]` section to point to the next incomplete milestone. If the milestone involves Convex (schema, queries, or mutations), explicitly add "Mind the @.cursor/rules/convex_rules.mdc for all Convex-related components and logic" to the prompt.
    *   **Update `memory/todo_app_prd.md`**: *CRITICAL Rule:* ONLY update this file if the core project scope, database schema, tech stack, or fundamental product requirements explicitly changed during the conversation.
 4. **Summary Report:** Reply to the user with a short markdown summary of exactly what was modified in the `memory/` folder.
 

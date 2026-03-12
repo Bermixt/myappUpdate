@@ -25,3 +25,8 @@
   - Implemented responsive task list with status/criticity badges, due date indicators, and aggregate counts.
   - Integrated task list into `app/app/list/page.tsx`.
   - Added "New Task" functionality with the details popup.
+- Milestone 5: Notes & Timeline:
+  - Created `convex/notes.ts` with `addNote`, `listNotes`, `updateNote`, and `deleteNote` functions.
+  - Implemented `components/tasks/NoteComposer.tsx` for adding notes and `components/tasks/NoteList.tsx` for displaying the timeline.
+  - Integrated the notes timeline into `TaskDetailsPopup.tsx`.
+  - **Bug Fix**: Resolved a nested form issue in `TaskDetailsPopup.tsx` where clicking "Post Note" would trigger the parent task form's submit handler, causing the modal to close prematurely. Changed the outer wrapper to a `div` and added `e.stopPropagation()` in the note composer.
