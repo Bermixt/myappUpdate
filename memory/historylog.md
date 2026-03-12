@@ -38,3 +38,10 @@
   - Developed `components/tasks/SharePicker.tsx` as a searchable multi-select for sharing tasks with other users.
   - Integrated sharing management into `TaskDetailsPopup.tsx`, enabling owners to manage access during both creation and editing of tasks.
   - Enforced owner-only sharing permissions in the UI.
+- Milestone 7: Kanban View:
+  - Installed `@dnd-kit/core`, `@dnd-kit/sortable`, and `@dnd-kit/utilities` for drag-and-drop support.
+  - Created reusable `components/ui/Badge.tsx` for status and criticity badges.
+  - Refactored `components/tasks/TaskListView.tsx` to use the unified `Badge` component.
+  - Implemented `components/tasks/KanbanCard.tsx`, `components/tasks/KanbanColumn.tsx`, and `components/tasks/KanbanView.tsx`.
+  - Added drag-and-drop functionality with owner-only permissions for status updates.
+  - Created `app/app/kanban/page.tsx` to host the board.
